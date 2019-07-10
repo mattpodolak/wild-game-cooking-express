@@ -15,6 +15,33 @@ import Button from "components/CustomButtons/Button.jsx";
 import workStyle from "assets/jss/material-kit-react/views/landingPageSections/workStyle.jsx";
 
 class ContactSection extends React.Component {
+  resetForm(){
+    document.getElementById('contact-form').reset();
+  }
+
+  handleSubmit(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+    axios({
+        method: "POST", 
+        url:"/api/send", 
+        data: {
+            name: name,   
+            email: email,  
+            messsage: message
+        }
+    }).then((response)=>{
+        if (response.data.msg === 'success'){
+            alert("Message Sent."); 
+            this.resetForm()
+        }else if(response.data.msg === 'fail'){
+            alert("Message failed to send.")
+        }
+    })
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -26,7 +53,7 @@ class ContactSection extends React.Component {
             Drop us a line to tell us one of your favorite Wild Game dishes, 
             or if you would like a recipe featured on one of our shows.
             </h4>
-            <form>
+            <form id="contact-form" onSubmit={this.handleSubmit.bind(this)} method="POST">
               <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
@@ -65,7 +92,7 @@ class ContactSection extends React.Component {
                     md={4}
                     className={classes.textCenter}
                   >
-                    <Button color="primary">Send Message</Button>
+                    <Button type="submit" color="primary">Send Message</Button>
                   </GridItem>
                 </GridContainer>
               </GridContainer>

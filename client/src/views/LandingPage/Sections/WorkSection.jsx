@@ -16,6 +16,11 @@ import Button from "components/CustomButtons/Button.jsx";
 import workStyle from "assets/jss/material-kit-react/views/landingPageSections/workStyle.jsx";
 
 class WorkSection extends React.Component {
+  
+  resetForm(){
+    document.getElementById('contact-form').reset();
+  }
+
   handleSubmit(e){
     e.preventDefault();
     const name = document.getElementById('name').value;
@@ -37,10 +42,6 @@ class WorkSection extends React.Component {
             alert("Message failed to send.")
         }
     })
-  }
-
-  resetForm(){
-      document.getElementById('contact-form').reset();
   }
 
   render() {
