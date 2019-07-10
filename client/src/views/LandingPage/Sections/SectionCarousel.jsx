@@ -16,6 +16,7 @@ import image1 from "assets/img/salmon-3-ways.jpg";
 import image2 from "assets/img/rabbit-ravioli.jpg";
 import image3 from "assets/img/beaver-burger.jpg";
 import image4 from "assets/img/moose-taco.jpg";
+import image5 from "assets/img/venison-steak.png";
 
 class SectionCarousel extends React.Component {
   render() {
@@ -84,6 +85,19 @@ class SectionCarousel extends React.Component {
                       <h4>
                         <LocationOn className="slick-icons" />
                         Moose Taco – Chef Becky prepares a fried bannock taco with ground moose, pico de gallo, jalapeno{"’"}s, grated cheese and sour cream.
+                      </h4>
+                    </div>
+                  </div>
+                  <div>
+                    <img
+                      src={image5}
+                      alt="Fifth slide"
+                      className="slick-image"
+                    />
+                    <div className="slick-caption">
+                      <h4>
+                        <LocationOn className="slick-icons" />
+                        Bacon Wrapped Venison Steaks with red wine demi-glace and blue cheese with mixed vegetables and a bacon stuffed hasselback potato.
                       </h4>
                     </div>
                   </div>
