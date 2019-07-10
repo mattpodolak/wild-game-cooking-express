@@ -25,7 +25,7 @@ class ContactSection extends React.Component {
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
-    console.log("PRESSED");
+
     axios({
         method: "POST", 
         url:"/api/send", 

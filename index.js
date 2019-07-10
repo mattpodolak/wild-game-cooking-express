@@ -48,11 +48,8 @@ app.get('/api/getList', (req,res) => {
 // An api endpoint that sends an email
 app.post('/api/send', (req,res) => {
   console.log(req.body);
-  console.log(req.body.name);
-    var name = req.body.name
-    var email = req.body.email
-    var message = req.body.message
-    var content = `name: ${name} \n email: ${email} \n message: ${message} `
+  console.log(req.body.message);
+    var content = 'name: '+ name + '\n email: ' + email + '\n message: ' + message;
   
     var mail = {
       from: name,
