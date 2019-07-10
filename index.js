@@ -1,5 +1,6 @@
 var nodemailer = require('nodemailer');
 const express = require('express');
+var router = express.Router();
 const path = require('path');
 const enforce = require('express-sslify');
 
@@ -40,7 +41,7 @@ app.get('/api/getList', (req,res) => {
 });
 
 // An api endpoint that sends an email
-app.post('/api/send', (req,res,next) => {
+router.post('/api/send', (req,res,next) => {
     var name = req.body.name
     var email = req.body.email
     var message = req.body.message
