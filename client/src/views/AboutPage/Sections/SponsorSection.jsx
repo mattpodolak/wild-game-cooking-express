@@ -40,6 +40,7 @@ class TeamSection extends React.Component {
                   <a 
                     href="https://www.gbscooks.com"
                     target="_blank"
+                    rel="noopener noreferrer"
                    >
                     <img src={sponsor1} alt="..." className={imageClasses} />
                   </a>
@@ -64,6 +65,7 @@ class TeamSection extends React.Component {
                   <a
                     href="https://www.nutrafarms.ca"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <img src={sponsor2} alt="..." className={imageClasses} />
                   </a>
@@ -88,6 +90,7 @@ class TeamSection extends React.Component {
                   <a
                     href="https://wildtv.ca"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <img src={sponsor3} alt="..." className={imageClasses} />
                   </a>
