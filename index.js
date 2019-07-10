@@ -56,7 +56,7 @@ app.post('/api/send', (req,res) => {
       from: name,
       to: 'mpodola2@gmail.com', 
       subject: '[Wild Game Cooking] - Contact Form New Message',
-      text: content
+      text: 'name: '+ name + '\n email: ' + email + '\n message: ' + message
     }
 
     transporter.sendMail(mail, (err, data) => {
