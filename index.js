@@ -49,14 +49,14 @@ app.get('/api/getList', (req,res) => {
 app.post('/api/send', (req,res) => {
     var name = req.body.name
     var email = req.body.email
-    var message = req.body.message
-    var content = 'name: '+ name + '\n email: ' + email + '\n message: ' + message;
+    var text = req.body.message
+    var content = 'name: '+ name + '\n email: ' + email + '\n message: ' + text;
   
     var mail = {
       from: name,
       to: 'mpodola2@gmail.com', 
       subject: '[Wild Game Cooking] - Contact Form New Message',
-      text: 'name: '+ name + '\n email: ' + email + '\n message: ' + message
+      text: content
     }
 
     transporter.sendMail(mail, (err, data) => {
