@@ -41,7 +41,7 @@ app.get('/api/getList', (req,res) => {
 });
 
 // An api endpoint that sends an email
-router.post('/api/send', (req,res,next) => {
+app.post('/api/send', (req,res,next) => {
     var name = req.body.name
     var email = req.body.email
     var message = req.body.message
