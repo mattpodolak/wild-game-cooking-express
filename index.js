@@ -1,9 +1,30 @@
-
+var nodemailer = require('nodemailer');
 const express = require('express');
 const path = require('path');
 const enforce = require('express-sslify');
 
 const app = express();
+
+const dotenv = require('dotenv');
+dotenv.config();
+
+var transport = {
+    host: 'smtp.gmail.com',
+    auth: {
+      user: process.env.USER,
+      pass: process.env.PASS
+    }
+  }
+  
+  var transporter = nodemailer.createTransport(transport)
+  
+  transporter.verify((error, success) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Server is ready to take messages');
+    }
+  });
 
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -17,6 +38,34 @@ app.get('/api/getList', (req,res) => {
     res.json(list);
     console.log('Sent list of items');
 });
+
+// An api endpoint that sends an email
+app.post('/api/send', (req,res,next) => {
+    var name = req.body.name
+    var email = req.body.email
+    var message = req.body.message
+    var content = `name: ${name} \n email: ${email} \n message: ${content} `
+  
+    var mail = {
+      from: name,
+      to: 'mpodola2@gmail.com', 
+      subject: '[Contact Form] - New Message',
+      text: content
+    }
+
+    transporter.sendMail(mail, (err, data) => {
+        if (err) {
+          res.json({
+            msg: 'fail'
+          })
+        } else {
+          res.json({
+            msg: 'success'
+          })
+        }
+    })
+});
+
 
 // Handles any requests that don't match the ones above
 app.get('*', (req,res) =>{

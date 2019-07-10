@@ -3,6 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
+import axios from 'axios';
 
 // @material-ui/icons
 
@@ -15,6 +16,33 @@ import Button from "components/CustomButtons/Button.jsx";
 import workStyle from "assets/jss/material-kit-react/views/landingPageSections/workStyle.jsx";
 
 class WorkSection extends React.Component {
+  handleSubmit(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+    axios({
+        method: "POST", 
+        url:"/api/send", 
+        data: {
+            name: name,   
+            email: email,  
+            messsage: message
+        }
+    }).then((response)=>{
+        if (response.data.msg === 'success'){
+            alert("Message Sent."); 
+            this.resetForm()
+        }else if(response.data.msg === 'fail'){
+            alert("Message failed to send.")
+        }
+    })
+  }
+
+  resetForm(){
+      document.getElementById('contact-form').reset();
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -27,7 +55,7 @@ class WorkSection extends React.Component {
             Drop us a line to tell us one of your favorite Wild Game dishes, 
             or if you would like a recipe featured on one of our shows.
             </h4>
-            <form>
+            <form id="contact-form" onSubmit={this.handleSubmit.bind(this)} method="POST">
               <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
