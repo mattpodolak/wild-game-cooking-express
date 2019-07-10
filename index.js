@@ -3,6 +3,7 @@ const express = require('express');
 var router = express.Router();
 const path = require('path');
 const enforce = require('express-sslify');
+var bodyParser = require('body-parser');
 
 const app = express();
 
@@ -33,6 +34,10 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 //force SSL
 app.use(enforce.HTTPS({ trustProtoHeader: true }))
 
+//parse api req
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 // An api endpoint that returns a short list of items
 app.get('/api/getList', (req,res) => {
     var list = ["item1", "item2", "item3"];
@@ -42,6 +47,8 @@ app.get('/api/getList', (req,res) => {
 
 // An api endpoint that sends an email
 app.post('/api/send', (req,res,next) => {
+  console.log(req.body);
+  console.log(req.body.name);
     var name = req.body.name
     var email = req.body.email
     var message = req.body.message
