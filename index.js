@@ -49,8 +49,9 @@ app.get('/api/getList', (req,res) => {
 app.post('/api/send', (req,res) => {
     var name = req.body.name
     var email = req.body.email
-    var text = String(req.body.message)
+    var text = String(req.body.message);
     var content = 'name: '+ name + '\n email: ' + email + '\n message: ' + text;
+    content = String(content);
   
     var mail = {
       from: name,
