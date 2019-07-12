@@ -54,7 +54,7 @@ app.post('/api/send', (req,res) => {
   
     var mail = {
       from: name,
-      to: 'mpodola2@gmail.com', 
+      to: 'tannersbeachproductions@hotmail.com', 
       subject: '[Wild Game Cooking] - Contact Form New Message',
       text: content
     }
