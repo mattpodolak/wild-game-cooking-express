@@ -92,6 +92,7 @@ class WorkSection extends React.Component {
       <div className={classes.section}>
         <GridContainer justify="center">
           <GridItem cs={12} sm={12} md={8}>
+            <h2 className={classes.title}>Contact Us</h2>
             <h4 className={classes.description}>
             We’d love to hear from you.
             Drop us a line to tell us one of your favorite Wild Game dishes, 
