@@ -4,6 +4,7 @@ var router = express.Router();
 const path = require('path');
 const enforce = require('express-sslify');
 var bodyParser = require('body-parser');
+var forceSsl = require('force-ssl-heroku');
 
 const app = express();
 
@@ -32,7 +33,8 @@ var transport = {
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 //force SSL
-app.use(enforce.HTTPS({ trustProtoHeader: true }))
+//app.use(enforce.HTTPS({ trustProtoHeader: true }));
+app.use(forceSsl);
 
 //parse api req
 app.use(bodyParser.json());
