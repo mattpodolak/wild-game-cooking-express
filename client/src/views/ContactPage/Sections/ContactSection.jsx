@@ -2,7 +2,7 @@ import React from "react";
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
 // @material-ui/core components
-import '@shopify/polaris/styles.css';
+//import '@shopify/polaris/styles.css';
 import withStyles from "@material-ui/core/styles/withStyles";
 import axios from 'axios';
 
@@ -19,17 +19,16 @@ import workStyle from "assets/jss/material-kit-react/views/landingPageSections/w
 
 class ContactSection extends React.Component {
   state = {
-    showToast: false,
+    showToast: true,
     sending: false
   };
-
-  sendStatus = "Send Message";
 
   toggleToast(){
     this.state.showToast = !this.state.showToast;
   }
   startSend(){
     this.state.sending = true;
+    this.sendStatus = "Sending";
   }
   stopSend(){
     this.state.sending = false;
@@ -64,11 +63,11 @@ class ContactSection extends React.Component {
         }
     }).then((response)=>{
         if (response.data.msg === 'success'){
-            //alert("Message Sent."); 
-            this.toggleToast()
+            alert("Message Sent."); 
+            //this.toggleToast()
             this.resetForm()
         }else if(response.data.msg === 'fail'){
-            //alert("Message failed to send.")
+            alert("Message failed to send.")
             this.failStatus();
         }
         else{
@@ -79,16 +78,15 @@ class ContactSection extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { showToast, sending} = this.state;
-    const toastMarkup = showToast ? (
-      <Toast content="Message sent" onDismiss={this.toggleToast} duration={4} />
-    ) : null;
-    const spinMarkup = sending ? (
-      <Spinner size="large" color="inkLightest" />
-    ) : null;
-    const buttonMarkup = !sending ? (
-      <Button type="submit" color="primary">{this.sendStatus}</Button>
-    ) : null;
+    // const { showToast, sending} = this.state;
+    // const toastMarkup = showToast ? (
+    //   <Frame>
+    //     <Toast content="Message sent" onDismiss={this.toggleToast} duration={4} />
+    //   </Frame>
+    // ) : null;
+    // const spinMarkup = sending ? (
+    //   <Spinner size="large" color="inkLightest" />
+    // ) : null;
     this.initStatus();
     return (
       <div className={classes.section}>
@@ -138,11 +136,7 @@ class ContactSection extends React.Component {
                     md={4}
                     className={classes.textCenter}
                   >
-                    {buttonMarkup}
-                    {spinMarkup}
-                    <Frame>
-                      {toastMarkup}
-                    </Frame>  
+                    <Button type="submit" color="primary">{this.sendStatus}</Button>
                   </GridItem>
                 </GridContainer>
               </GridContainer>
