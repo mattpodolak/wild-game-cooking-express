@@ -50,10 +50,6 @@ app.post('/api/send', (req,res) => {
     var name = req.body.name
     var email = req.body.email
     var text = req.body.message
-    console.log("Text: ", text);
-    console.log(req.body);
-    console.log(req.body.message);
-    console.log("Content: ", content);
     var content = 'name: '+ name + '\nemail: ' + email + '\nmessage: ' + text;
   
     var mail = {

@@ -32,7 +32,7 @@ class WorkSection extends React.Component {
         data: {
             name: name,   
             email: email,  
-            messsage: message
+            message: message
         }
     }).then((response)=>{
         if (response.data.msg === 'success'){
