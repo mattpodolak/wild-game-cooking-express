@@ -2,10 +2,12 @@ import React from "react";
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
 // @material-ui/core components
+import '@shopify/polaris/styles.css';
 import withStyles from "@material-ui/core/styles/withStyles";
 import axios from 'axios';
 
-// @material-ui/icons
+// @shopify/polaris
+import {Spinner, Toast, Frame} from '@shopify/polaris';
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -16,9 +18,34 @@ import Button from "components/CustomButtons/Button.jsx";
 import workStyle from "assets/jss/material-kit-react/views/landingPageSections/workStyle.jsx";
 
 class WorkSection extends React.Component {
-  
+  state = {
+    showToast: false,
+    sending: false
+  };
+
+  sendStatus = "Send Message";
+
+  toggleToast(){
+    this.state.showToast = !this.state.showToast;
+  }
+  startSend(){
+    this.state.sending = true;
+  }
+  stopSend(){
+    this.state.sending = false;
+  }
+
+  initStatus(){
+    this.sendStatus = "Send Message";
+  }
+  failStatus(){
+    this.stopSend();
+    this.sendStatus = "Try Again";
+  }
   resetForm(){
     document.getElementById('contact-form').reset();
+    this.stopSend();
+    this.initStatus();
   }
 
   handleSubmit(e){
@@ -26,6 +53,7 @@ class WorkSection extends React.Component {
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
+    this.startSend();
     axios({
         method: "POST", 
         url:"/api/send", 
@@ -36,21 +64,36 @@ class WorkSection extends React.Component {
         }
     }).then((response)=>{
         if (response.data.msg === 'success'){
-            alert("Message Sent."); 
+            //alert("Message Sent."); 
+            this.toggleToast()
             this.resetForm()
         }else if(response.data.msg === 'fail'){
-            alert("Message failed to send.")
+            //alert("Message failed to send.")
+            this.failStatus();
+        }
+        else{
+          this.failStatus();
         }
     })
   }
 
   render() {
     const { classes } = this.props;
+    const { showToast, sending} = this.state;
+    const toastMarkup = showToast ? (
+      <Toast content="Message sent" onDismiss={this.toggleToast} duration={4} />
+    ) : null;
+    const spinMarkup = sending ? (
+      <Spinner size="large" color="inkLightest" />
+    ) : null;
+    const buttonMarkup = !sending ? (
+      <Button type="submit" color="primary">{this.sendStatus}</Button>
+    ) : null;
+    this.initStatus();
     return (
       <div className={classes.section}>
         <GridContainer justify="center">
           <GridItem cs={12} sm={12} md={8}>
-            <h2 className={classes.title}>Contact Us</h2>
             <h4 className={classes.description}>
             We’d love to hear from you.
             Drop us a line to tell us one of your favorite Wild Game dishes, 
@@ -95,7 +138,11 @@ class WorkSection extends React.Component {
                     md={4}
                     className={classes.textCenter}
                   >
-                    <Button type="submit" color="primary">Send Message</Button>
+                    {buttonMarkup}
+                    {spinMarkup}
+                    <Frame>
+                      {toastMarkup}
+                    </Frame>  
                   </GridItem>
                 </GridContainer>
               </GridContainer>
