@@ -2,12 +2,8 @@ import React from "react";
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
 // @material-ui/core components
-//import '@shopify/polaris/styles.css';
 import withStyles from "@material-ui/core/styles/withStyles";
 import axios from 'axios';
-
-// @shopify/polaris
-import {Spinner, Toast, Frame} from '@shopify/polaris';
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -19,32 +15,17 @@ import workStyle from "assets/jss/material-kit-react/views/landingPageSections/w
 
 class ContactSection extends React.Component {
   state = {
-    showToast: true,
-    sending: false
+    text: "Send Message"
   };
 
-  toggleToast(){
-    this.state.showToast = !this.state.showToast;
-  }
-  startSend(){
-    this.state.sending = true;
-    this.sendStatus = "Sending";
-  }
-  stopSend(){
-    this.state.sending = false;
-  }
+  changeText = (text) => {
 
-  initStatus(){
-    this.sendStatus = "Send Message";
-  }
-  failStatus(){
-    this.stopSend();
-    this.sendStatus = "Try Again";
-  }
+    this.setState({ text }); 
+  } 
+
   resetForm(){
     document.getElementById('contact-form').reset();
-    this.stopSend();
-    this.initStatus();
+    this.changeText("Send Message");
   }
 
   handleSubmit(e){
@@ -52,7 +33,8 @@ class ContactSection extends React.Component {
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
-    this.startSend();
+    this.changeText("Sending");
+    let self = this;
     axios({
         method: "POST", 
         url:"/api/send", 
@@ -63,31 +45,27 @@ class ContactSection extends React.Component {
         }
     }).then((response)=>{
         if (response.data.msg === 'success'){
-            alert("Message Sent."); 
-            //this.toggleToast()
+            this.changeText("Message Sent");
+            alert("Message Sent.");
             this.resetForm()
         }else if(response.data.msg === 'fail'){
-            alert("Message failed to send.")
-            this.failStatus();
+            //alert("Message failed to send.")
+            this.changeText("Try Again");
         }
         else{
-          this.failStatus();
+          this.changeText("Try Again");
         }
+    }).catch(function (error) {
+      // handle error
+      //alert("Message failed to send.")
+      console.log("Mailing error: ", error);
+      self.changeText("Try Again");
     })
   }
 
   render() {
     const { classes } = this.props;
-    // const { showToast, sending} = this.state;
-    // const toastMarkup = showToast ? (
-    //   <Frame>
-    //     <Toast content="Message sent" onDismiss={this.toggleToast} duration={4} />
-    //   </Frame>
-    // ) : null;
-    // const spinMarkup = sending ? (
-    //   <Spinner size="large" color="inkLightest" />
-    // ) : null;
-    this.initStatus();
+    const { text } = this.state;
     return (
       <div className={classes.section}>
         <GridContainer justify="center">
@@ -136,7 +114,7 @@ class ContactSection extends React.Component {
                     md={4}
                     className={classes.textCenter}
                   >
-                    <Button type="submit" color="primary">{this.sendStatus}</Button>
+                    <Button type="submit" color="primary">{text}</Button>
                   </GridItem>
                 </GridContainer>
               </GridContainer>
