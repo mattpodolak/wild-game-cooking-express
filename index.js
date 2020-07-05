@@ -40,13 +40,6 @@ app.use(forceSsl);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// An api endpoint that returns a short list of items
-app.get('/api/getList', (req,res) => {
-    var list = ["item1", "item2", "item3"];
-    res.json(list);
-    console.log('Sent list of items');
-});
-
 // An api endpoint that sends an email
 app.post('/api/send', (req,res) => {
     var name = req.body.name
@@ -56,7 +49,7 @@ app.post('/api/send', (req,res) => {
   
     var mail = {
       from: name,
-      to: 'tannersbeachproductions@hotmail.com', 
+      to: 'wildgamecookingtv@gmail.com', 
       subject: '[Wild Game Cooking] - Contact Form New Message',
       text: content
     }
