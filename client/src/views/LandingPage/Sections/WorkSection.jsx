@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import axios from 'axios';
+import ReactGA from 'react-ga';
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -32,6 +33,10 @@ class WorkSection extends React.Component {
 
   handleSubmit(e){
     e.preventDefault();
+    ReactGA.event({
+      category: "Contact Us",
+      action: "User submitted a message using the contact form on the home page",
+    });
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
