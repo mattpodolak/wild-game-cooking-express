@@ -8,10 +8,6 @@ import {AppProvider} from '@shopify/polaris';
 
 import "assets/scss/material-kit-react.scss?v=1.7.0";
 
-//initialize GA
-const trackingId = "UA-171074052-1";
-ReactGA.initialize(trackingId);
-
 // pages for this product
 import LandingPage from "views/LandingPage/LandingPage.jsx";
 import AboutPage from "views/AboutPage/AboutPage.jsx";
@@ -19,8 +15,12 @@ import ContactPage from "views/ContactPage/ContactPage.jsx";
 
 var hist = createBrowserHistory();
 
+//initialize GA
+const trackingId = "UA-171074052-1";
+ReactGA.initialize(trackingId);
+
 // Initialize google analytics page view tracking
-history.listen(location => {
+hist.listen(location => {
   ReactGA.set({ page: location.pathname }); // Update the user's current page
   ReactGA.pageview(location.pathname); // Record a pageview for the given page
 });
